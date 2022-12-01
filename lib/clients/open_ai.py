@@ -1,9 +1,10 @@
+import os
 import openai
 MAX_TOKENS = 1000
 MODEL = "text-davinci-003"
 TEMPERATURE = 0.7
 # Add OpenI Key Here
-API_TOKEN = "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"
+API_TOKEN = os.environ.get("OPENAI_API")
 
 
 class OpenAi:

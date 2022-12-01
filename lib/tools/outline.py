@@ -15,11 +15,11 @@ from lib.ml.get_keywords import GetKeywords
 from lib.ml.clustering import Clustering
 from lib.ml.prompts import generate_title, generate_description, generate_outline
 import spacy
-_nlp = spacy.load('en_core_web_lg')
 
 
 class GenerateOutline:
     def __init__(self, serps, outline_id):
+        self._nlp = spacy.load('en_core_web_lg')
         self.serps = serps
         self.data = {
 
@@ -166,8 +166,8 @@ class GenerateOutline:
         return list(keywords)[:count]
 
     def analyse_articles(self):
-        _gf = GetFacts(_nlp)
-        _gk = GetKeywords(_nlp)
+        _gf = GetFacts(self._nlp)
+        _gk = GetKeywords(self._nlp)
         for url in self.serps:
             try:
                 article = ArticleClient(url).get()

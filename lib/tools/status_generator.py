@@ -33,8 +33,11 @@ class StatusGenerator:
                 f"#{keyword['keyword'].strip().title().replace(' ', '')}")
         PROMPT = f"Generate an engaging {self.social_media} post with hashtags from the Text:\n\"\"\"\nText:"
         statuses = []
+        cutoff = int(len(summary) * 0.5)
+        if cutoff > 20:
+            cutoff = 20
         for x in range(0, self.variations):
-            _s = random.sample(summary, int(len(summary) * 0.5))
+            _s = random.sample(summary, cutoff)
             status = OpenAi().generate((PROMPT + " ".join(_s) + "\n\"\"\"\nPost:"))
             statuses.append(status)
         return {
