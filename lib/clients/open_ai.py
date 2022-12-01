@@ -3,7 +3,7 @@ MAX_TOKENS = 1000
 MODEL = "text-davinci-003"
 TEMPERATURE = 0.7
 # Add OpenI Key Here
-API_TOKEN = "sk-JMn2YCnb1zTMqEjpIRXMpixxZyEXU4Uw87jlSTyP"
+API_TOKEN = "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"
 
 
 class OpenAi:
