@@ -38,7 +38,14 @@ class StatusGenerator:
             cutoff = 20
         for x in range(0, self.variations):
             _s = random.sample(summary, cutoff)
-            status = OpenAi().generate((PROMPT + " ".join(_s) + "\n\"\"\"\nPost:"))
+            _s = " ".join(_s)
+            status = OpenAi().generate((PROMPT + (_s) + "\n\"\"\"\nPost:"))
+            checker = 0
+            while len(status) == 0:
+                status = OpenAi().generate((PROMPT + (_s) + "\n\"\"\"\nPost:"))
+                checker += 1
+                if checker > 3:
+                    break
             statuses.append(status)
         return {
             "statuses": statuses,

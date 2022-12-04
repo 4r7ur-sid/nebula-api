@@ -1,5 +1,4 @@
-from flask import Blueprint, jsonify, request
-from pymongo import MongoClient
+from flask import Blueprint, jsonify, request, current_app
 
 from lib.tools.status_generator import StatusGenerator
 gptx = Blueprint('gptx', __name__)
@@ -23,9 +22,14 @@ def status_generator():
     if "variations" not in body:
         return jsonify({"error": "Manditory field missing"}), 400
     # StatusGenerator
+    if hasattr(request, 'user'):
+        doc = request.doc
+        if doc["credits"] <= 0 or doc["credits"] < body["variations"]:
+            return jsonify({"error": "You have no credits left"}), 402
     try:
         status_generator = StatusGenerator(
             body["url"], body["social_media"], body["variations"])
-        return jsonify(status_generator.generate()), 200
+        doc["credits"] -= body["variations"]
+        return jsonify({**status_generator.generate(), "doc": doc}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
