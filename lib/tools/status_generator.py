@@ -31,7 +31,7 @@ class StatusGenerator:
         for keyword in keywords:
             hashtags.append(
                 f"#{keyword['keyword'].strip().title().replace(' ', '')}")
-        PROMPT = f"Generate an engaging {self.social_media} post with hashtags from the Text:\n\"\"\"\nText:"
+        PROMPT = f"Generate an elaborate and engaging {self.social_media} post explaining learnings from the Text:\n\"\"\"\nText:"
         statuses = []
         cutoff = int(len(summary) * 0.5)
         if cutoff > 20:

@@ -51,10 +51,12 @@ def deduct_api_calls(response):
     if hasattr(response, 'json') and response.json is not None:
         if "error" in response.json:
             return response
-        doc = response.json["doc"]
-        db = firestore.client()
-        db.collection("tools").document(request.user).set(doc)
-        del response.json["doc"]
+        if "doc" in response.json:
+            if response.json["doc"] is not None:
+                doc = response.json["doc"]
+                db = firestore.client()
+                db.collection("tools").document(request.user).set(doc)
+            del response.json["doc"]
     return response
 
 

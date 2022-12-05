@@ -29,7 +29,10 @@ def status_generator():
     try:
         status_generator = StatusGenerator(
             body["url"], body["social_media"], body["variations"])
-        doc["credits"] -= body["variations"]
+        if hasattr(request, 'user'):
+            doc["credits"] -= body["variations"]
+        else:
+            doc = None
         return jsonify({**status_generator.generate(), "doc": doc}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
