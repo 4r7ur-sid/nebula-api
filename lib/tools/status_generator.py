@@ -41,7 +41,7 @@ class StatusGenerator:
             _s = " ".join(_s)
             status = OpenAi().generate((PROMPT + (_s) + "\n\"\"\"\nPost:"))
             checker = 0
-            while len(status) == 0:
+            while len(status) <= 20:
                 status = OpenAi().generate((PROMPT + (_s) + "\n\"\"\"\nPost:"))
                 checker += 1
                 if checker > 3:
