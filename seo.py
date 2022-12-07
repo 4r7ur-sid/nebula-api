@@ -5,10 +5,10 @@ from lib.tools.outline import GenerateOutline
 client = MongoClient('localhost', 27018)
 db = client['cadmus']
 
-outlines = Blueprint('outlines', __name__)
+seo = Blueprint('seo', __name__)
 
 
-@outlines.route('/generate', methods=['POST'])
+@seo.route('/generate', methods=['POST'])
 def outline():
     body = request.get_json()
     if "urls" not in body:
@@ -39,7 +39,7 @@ def outline():
     return jsonify(outline), 200
 
 
-@outlines.route('/get', methods=['POST'])
+@seo.route('/get', methods=['POST'])
 def get_outline():
     body = request.get_json()
     if "outline_id" not in body:

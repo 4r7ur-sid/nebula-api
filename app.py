@@ -1,4 +1,4 @@
-from outlines import outlines
+from seo import seo
 from locations import locations
 from serps import serps
 from gptx import gptx
@@ -60,7 +60,7 @@ def deduct_api_calls(response):
     return response
 
 
-app.register_blueprint(outlines, url_prefix='/api/v1/outline')
+app.register_blueprint(seo, url_prefix='/api/v1/seo')
 app.register_blueprint(locations, url_prefix='/api/v1/location')
 app.register_blueprint(serps, url_prefix='/api/v1/serp')
 app.register_blueprint(gptx, url_prefix='/api/v1/gptx')
