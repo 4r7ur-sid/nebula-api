@@ -121,6 +121,7 @@ def get_external_links(soup, url, text):
                 if domain not in link.get('href') and not get_social_links(link.get('href')) and link.text.lower() in text:
                     links.append({
                         "url": link.get('href'),
+                        "domain": domain,
                         "text": link.text.strip(),
                         "postion": text.find(link.text.lower())
                     })

@@ -18,6 +18,8 @@ import spacy
 
 
 class GenerateOutline:
+    '''This Class in Deprecated and is only used for reference.'''
+
     def __init__(self, serps, outline_id):
         self._nlp = spacy.load('en_core_web_lg')
         self.serps = serps

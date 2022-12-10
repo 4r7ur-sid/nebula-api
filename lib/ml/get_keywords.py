@@ -62,7 +62,8 @@ def custom_extractor(doc):
             if _t and len(_t) > 1:
                 all_tokens.append(_t)
         except Exception as e:
-            print(e)
+            # print(e)
+            pass
     return all_tokens
 
 
