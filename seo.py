@@ -2,8 +2,9 @@ from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
 from lib.tools.outline import GenerateOutline
 from lib.tools.content_gap_analysis import ContentGapAnalysis
-client = MongoClient('localhost', 27018)
-db = client['cadmus']
+from os import environ
+client = MongoClient(environ.get("ATLAS_URI"))
+db = client['tools']
 
 seo = Blueprint('seo', __name__)
 

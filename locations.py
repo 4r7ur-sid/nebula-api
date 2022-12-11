@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
-client = MongoClient('localhost', 27018)
-db = client['cadmus']
+from os import environ
+client = MongoClient(environ.get("ATLAS_URI"))
+db = client['dfs']
 
 locations = Blueprint('locations', __name__)
 

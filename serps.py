@@ -2,8 +2,9 @@ from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
 from uuid import uuid4
 from lib.clients.dfs import DFS
-client = MongoClient('localhost', 27018)
-db = client['cadmus']
+from os import environ
+client = MongoClient(environ.get("ATLAS_URI"))
+db = client['tools']
 
 serps = Blueprint('serps', __name__)
 
