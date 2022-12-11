@@ -27,7 +27,7 @@ def serp():
     serps = dfs.get_serp(body["keyword"], body["location"])
     serps["keyword"] = body["keyword"]
     serps["location"] = body["location"]
-    serps["outline_id"] = str(uuid4())
+    serps[body["identifier"]] = str(uuid4())
     db.serps.insert_one(serps)
     del serps["_id"]
     del serps["faq"]
