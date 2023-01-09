@@ -82,16 +82,28 @@ def content_gap():
     analysis = db.serps.find_one({"analysis_id": body["analysis_id"]})
     if not analysis:
         return jsonify({"error": "analysis_id does not exist"}), 404
-
-    cga = ContentGapAnalysis(
-        analysis["analysis_id"],
-        analysis["country"],
-        analysis["keyword"],
-        body["serps"],
-        body["url"]
-    )
-    output = cga.analyse()
-    if output is None:
-        return jsonify({"error": "Analysis failed"}), 500
-    db.content_gaps.insert_one(output)
-    return jsonify(output), 200
+    if hasattr(request, 'user'):
+        doc = request.doc
+        if doc["credits"] < 3:
+            return jsonify({"error": "You do not have enough credits"}), 402
+    try:
+        cga = ContentGapAnalysis(
+            analysis["analysis_id"],
+            analysis["country"],
+            analysis["keyword"],
+            body["serps"],
+            body["url"]
+        )
+        output = cga.analyse()
+        if output is None:
+            return jsonify({"error": "Analysis failed"}), 500
+        if hasattr(request, 'user'):
+            doc["credits"] -= 3
+            # Assign uid to serps
+            output["uid"] = request.user["uid"]
+        else:
+            doc = None
+        db.content_gaps.insert_one(output)
+        return jsonify({**output, "doc": doc}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

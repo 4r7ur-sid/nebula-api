@@ -24,8 +24,8 @@ def status_generator():
     # StatusGenerator
     if hasattr(request, 'user'):
         doc = request.doc
-        if doc["credits"] <= 0 or doc["credits"] < body["variations"]:
-            return jsonify({"error": "You have no credits left"}), 402
+        if doc["credits"] < body["variations"]:
+            return jsonify({"error": "You do not have enough credits"}), 402
     try:
         status_generator = StatusGenerator(
             body["url"], body["social_media"], body["variations"])

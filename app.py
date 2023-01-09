@@ -2,6 +2,7 @@ from seo import seo
 from locations import locations
 from serps import serps
 from gptx import gptx
+from users import users
 from flask import Flask, request
 # Import Flask cors
 from flask_cors import CORS
@@ -39,6 +40,8 @@ def api_auth():
             db = firestore.client()
             request.doc = db.collection(
                 "tools").document(request.user).get().to_dict()
+            if request.doc["credits"] <= 0:
+                return jsonify({"error": "No credits left"}), 402
             return
         except Exception as e:
             print(e)
@@ -64,7 +67,7 @@ app.register_blueprint(seo, url_prefix='/api/v1/seo')
 app.register_blueprint(locations, url_prefix='/api/v1/location')
 app.register_blueprint(serps, url_prefix='/api/v1/serp')
 app.register_blueprint(gptx, url_prefix='/api/v1/gptx')
-
+app.register_blueprint(users, url_prefix='/api/v1/users')
 if __name__ == '__main__':
     app.run(debug=True)
     app.run()
